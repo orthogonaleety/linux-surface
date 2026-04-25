@@ -18,6 +18,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Maximize disk space
+        #maximise being user specific errors, not needed on self hosted.
+        if: false
         uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 5120
