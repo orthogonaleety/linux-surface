@@ -1,3 +1,8 @@
+# linux-surface (personal fork)
+
+NB: This is a personal fork used for bug reproduction and testing purposes.
+It's likely that for any matters you will want to refer upstream with org https://github.com/linux-surface/
+
 # Linux Surface
 
 Linux running on the Microsoft Surface devices.
