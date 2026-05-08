@@ -1,4 +1,4 @@
-From 5082741761b0d437dc21765ea8fb3eb4c1115d85 Mon Sep 17 00:00:00 2001
+From eba6888821976d1aab8619e56c9acd741b28f12f Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sun, 19 Feb 2023 22:12:24 +0100
 Subject: [PATCH] PCI: Add quirk to prevent calling shutdown method
@@ -95,7 +95,7 @@ index 1c270f1d5123..431c1246130d 100644
 -- 
 2.54.0
 
-From b10a7ab23474e9483f0b3072d35b0c489dbcd04c Mon Sep 17 00:00:00 2001
+From 864605a6568c887c986be196298c5a246c87b5cf Mon Sep 17 00:00:00 2001
 From: LegendaryFire <tristan.balon@outlook.com>
 Date: Wed, 7 Jan 2026 01:06:25 +0100
 Subject: [PATCH] PCI: Add Surface Laptop Studio 2 devices to shutdown ops

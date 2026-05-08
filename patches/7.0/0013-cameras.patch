@@ -1,4 +1,4 @@
-From b6ac30c8b71ee90342d6b8e020ce590b104a2e47 Mon Sep 17 00:00:00 2001
+From df05fb5d22c4c7d32030cc95ba054808f26ff7c4 Mon Sep 17 00:00:00 2001
 From: Hans de Goede <hdegoede@redhat.com>
 Date: Sun, 10 Oct 2021 20:56:57 +0200
 Subject: [PATCH] ACPI: delay enumeration of devices with a _DEP pointing to an
@@ -74,7 +74,7 @@ index e8cdbdb46fdb..66978eaa979d 100644
 -- 
 2.54.0
 
-From 48eb1a1ffc20a2882356dea5eb384ff823bed340 Mon Sep 17 00:00:00 2001
+From 4f1bc9f672e8f9a1c07af588bc24fd0dea803271 Mon Sep 17 00:00:00 2001
 From: zouxiaoh <xiaohong.zou@intel.com>
 Date: Fri, 25 Jun 2021 08:52:59 +0800
 Subject: [PATCH] iommu: intel-ipu: use IOMMU passthrough mode for Intel IPUs
@@ -184,7 +184,7 @@ index 67c6ad5f1c72..49d9976f23f0 100644
 -- 
 2.54.0
 
-From 330b75cbfc4702a3946bc65b338589703fb7d256 Mon Sep 17 00:00:00 2001
+From b6c92e71213c6184482c31b29afb91f02c9d79a7 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <djrscally@gmail.com>
 Date: Sun, 10 Oct 2021 20:57:02 +0200
 Subject: [PATCH] platform/x86: int3472: Enable I2c daisy chain
@@ -221,7 +221,7 @@ index a496075c0d2a..fded1fc63fd8 100644
 -- 
 2.54.0
 
-From 0b0411ac7146ad078b90f3ae09db707bff57d0cd Mon Sep 17 00:00:00 2001
+From c9674629e575dfdc45e2cd6fcae83a4443839f15 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <dan.scally@ideasonboard.com>
 Date: Tue, 21 Mar 2023 13:45:26 +0000
 Subject: [PATCH] media: i2c: Clarify that gain is Analogue gain in OV7251
@@ -260,7 +260,7 @@ index 27afc3fc0175..28b192c9a5ec 100644
 -- 
 2.54.0
 
-From 0286e901fdf26746b74ada77e46841e5712bcaf9 Mon Sep 17 00:00:00 2001
+From 61f08f243fcd298024b45b313289d89c2a357b5e Mon Sep 17 00:00:00 2001
 From: Daniel Scally <dan.scally@ideasonboard.com>
 Date: Wed, 22 Mar 2023 11:01:42 +0000
 Subject: [PATCH] media: v4l2-core: Acquire privacy led in
@@ -311,7 +311,7 @@ index 03daa8c4ff7a..a84615b12a35 100644
 -- 
 2.54.0
 
-From 171df368b209815327924589ec16e36117985f59 Mon Sep 17 00:00:00 2001
+From f93e3f8e447df6d37bb7843fa36776849af41fb2 Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:16 +0800
 Subject: [PATCH] platform: x86: int3472: Add MFD cell for tps68470 LED
@@ -352,7 +352,7 @@ index fded1fc63fd8..f9849e83ada2 100644
 -- 
 2.54.0
 
-From 01b23bbd6662c3ae8bbeb7d2b7e15e2ae7400dc4 Mon Sep 17 00:00:00 2001
+From b91f82355c68da743b681cdad8de90cbd30cedc5 Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:17 +0800
 Subject: [PATCH] include: mfd: tps68470: Add masks for LEDA and LEDB
@@ -393,7 +393,7 @@ index 7807fa329db0..2d2abb25b944 100644
 -- 
 2.54.0
 
-From d246a664f4f21dda65183f2e81a337f1219919cc Mon Sep 17 00:00:00 2001
+From 96a0c0e572f8647d91553d160ba98b61157696a4 Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:18 +0800
 Subject: [PATCH] leds: tps68470: Add LED control for tps68470
@@ -644,7 +644,7 @@ index 000000000000..35aeb5db89c8
 -- 
 2.54.0
 
-From b3fd02435b92e2e21291d006bccdc88f2413b3b9 Mon Sep 17 00:00:00 2001
+From 931679a64674d35016b7f13f9d082e77b388293c Mon Sep 17 00:00:00 2001
 From: mojyack <mojyack@gmail.com>
 Date: Tue, 26 Mar 2024 05:55:44 +0900
 Subject: [PATCH] media: i2c: dw9719: fix probe error on surface go 2
@@ -676,7 +676,7 @@ index 59558335989e..b89765521af5 100644
 -- 
 2.54.0
 
-From caafc2a672fb189557c4b11072f8588266c6dfe6 Mon Sep 17 00:00:00 2001
+From 4d213baff75d1d35942831f38a5910937eb45248 Mon Sep 17 00:00:00 2001
 From: Tooraj Taraz <tooraj.taraz@yahoo.com>
 Date: Wed, 31 Dec 2025 00:35:50 +0100
 Subject: [PATCH] Add camera support for Surface Pro 9
@@ -1017,7 +1017,7 @@ index 1c65ce87cde0..3b9f4e0de6e7 100644
 -- 
 2.54.0
 
-From d3b42814c89f4c8694f41c66e0762d050418488a Mon Sep 17 00:00:00 2001
+From 822d96110833580596485aba649e8bcb9dc918c1 Mon Sep 17 00:00:00 2001
 From: gabrielstedman <gabrielstedman@users.noreply.github.com>
 Date: Fri, 13 Mar 2026 08:52:07 +0000
 Subject: [PATCH] media: ipu-bridge: Add front camera rotation quirks for

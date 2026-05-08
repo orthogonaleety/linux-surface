@@ -1,4 +1,4 @@
-From bdc67ee100bf74f113f56f34cb68bc3d8aac1c69 Mon Sep 17 00:00:00 2001
+From 210fc01e86ff315ee1164202f02c1fd573a4ea60 Mon Sep 17 00:00:00 2001
 From: Sachi King <nakato@nakato.io>
 Date: Tue, 5 Oct 2021 00:05:09 +1100
 Subject: [PATCH] Input: soc_button_array - support AMD variant Surface devices
@@ -75,7 +75,7 @@ index b8cad415c62c..43b5d56383e3 100644
 -- 
 2.54.0
 
-From 97be6f83e27daeb19ca59357fdcef8f585e2fd39 Mon Sep 17 00:00:00 2001
+From 0b5a3c62143d13dc6b81ce38564b5d68219eac76 Mon Sep 17 00:00:00 2001
 From: Sachi King <nakato@nakato.io>
 Date: Tue, 5 Oct 2021 00:22:57 +1100
 Subject: [PATCH] platform/surface: surfacepro3_button: don't load on amd
