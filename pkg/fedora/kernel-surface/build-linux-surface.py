@@ -11,7 +11,7 @@ import logging
 ##
 ## The name of the modified kernel package.
 ##
-PACKAGE_NAME = "surface-exp"
+PACKAGE_NAME = "surfaceexp"
 
 ##
 ## https://gitlab.com/cki-project/kernel-ark/-/tags
