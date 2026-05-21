@@ -1,3 +1,5 @@
+This is just a test repo. Refer to upstream linux-surface/linuxsurface for all needs. You may find artifacts lying around but the packages aren't signed in any way, and might sometimes be built on remote worker.
+
 # Linux Surface
 
 Linux running on the Microsoft Surface devices.
