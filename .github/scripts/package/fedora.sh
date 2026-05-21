@@ -44,6 +44,23 @@ build-packages)
     git config --global user.name "surfacebot"
     git config --global user.email "surfacebot@users.noreply.github.com"
 
+    #create an action > variable FEDORA_BUILD_MONITOR value 'true' to enable monitor logging
+    if [ "${FEDORA_BUILD_MONITOR:-}" = "true" ]; then
+        # Background resource monitor: streams memory, disk, and top processes to stderr every 10s.
+        # Stderr is streamed live to GitHub's log servers, so snapshots survive runner death.
+        (set +exo pipefail #keep the monitor running but don't output commands
+        TOP_PROCS=5 #change this to examine more procs but beware of exhausting portal log viewer as the step nears completion
+        while true; do
+            printf '\n\e[1;33m=== %s ===\e[0m\n' "$(date -u '+%H:%M:%S')"
+            { echo 'memory (MB):'; free -m; } | sed 's/.*/\x1b[33m&\x1b[0m/'
+            { echo 'disk:'; df -h / /working 2>/dev/null; } | sed 's/.*/\x1b[33m&\x1b[0m/'
+            { echo 'top processes by memory:'; ps aux --sort=-%mem 2>/dev/null | head -"${TOP_PROCS}"; } | sed 's/.*/\x1b[33m&\x1b[0m/'
+            sleep 15
+        done) >&2 &
+        MONITOR_PID=$!
+        trap "kill ${MONITOR_PID} 2>/dev/null; wait ${MONITOR_PID} 2>/dev/null" EXIT
+    fi
+
     # Build source RPM packages
     python3 build-linux-surface.py --mode srpm --ark-dir kernel-ark --outdir srpm
 

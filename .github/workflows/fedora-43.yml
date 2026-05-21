@@ -41,8 +41,11 @@ jobs:
             bash ./.github/scripts/package/fedora.sh setup-secureboot
 
       - name: Build packages
+        env:
+          FEDORA_BUILD_MONITOR: ${{ vars.FEDORA_BUILD_MONITOR }}
         run: |
           bash ./.github/scripts/container/exec.sh \
+            -e FEDORA_BUILD_MONITOR \
             -- \
             bash ./.github/scripts/package/fedora.sh build-packages
 
