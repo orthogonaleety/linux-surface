@@ -1,4 +1,4 @@
-This is just a test repo. Refer to upstream linux-surface/linuxsurface for all needs. You may find artifacts lying around but the packages aren't signed in any way, and might sometimes be built on remote worker.
+This is largely a personal fork of upstream linu-xsurface for building Fedora 44 7.x kernels. Anyone is welcome to use my builds but as there is no collaborative oversite to keep you safe, then as a matter of minimum transparency the builds are only available for download as the original artifacts under the workflow runs, where their link to the code that created them remains unbroken, and can be publicly inspected. You would also need to note that the workers are github, not remote to further ensure the build enviroment is neutral. For more details on obtaining a build goto a relevant tagged release and read the release instructions and use the links under there.
 
 # Linux Surface
 
