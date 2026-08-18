@@ -1,4 +1,4 @@
-From 19db60d10f31af7a2c42643c900728539527e86f Mon Sep 17 00:00:00 2001
+From f04cbdcadd434b86c147ffa2b98dd6af6c68114f Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sun, 12 Mar 2023 01:41:57 +0100
 Subject: [PATCH] platform/surface: gpe: Add support for Surface Pro 9
@@ -47,5 +47,5 @@ index b359413903b1..b4496db79f39 100644
  		.ident = "Surface Book 1",
  		.matches = {
 -- 
-2.54.0
+2.55.0
 

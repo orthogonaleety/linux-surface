@@ -1,4 +1,4 @@
-From 698dc3466053e8ebc5bf2c8507b654e18d7e58dd Mon Sep 17 00:00:00 2001
+From be20129a1400a402153fed5a60aa547751b44cec Mon Sep 17 00:00:00 2001
 From: Hans de Goede <hdegoede@redhat.com>
 Date: Sun, 10 Oct 2021 20:56:57 +0200
 Subject: [PATCH] ACPI: delay enumeration of devices with a _DEP pointing to an
@@ -58,10 +58,10 @@ Patchset: cameras
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 530547cda8b2..0656e1da5b43 100644
+index 9a7ac2eb9ce0..46c415b3a955 100644
 --- a/drivers/acpi/scan.c
 +++ b/drivers/acpi/scan.c
-@@ -2244,6 +2244,9 @@ static const char * const acpi_system_dev_ids[] = {
+@@ -2246,6 +2246,9 @@ static const char * const acpi_system_dev_ids[] = {
  
  static void acpi_default_enumeration(struct acpi_device *device)
  {
@@ -72,9 +72,9 @@ index 530547cda8b2..0656e1da5b43 100644
  	 * Do not enumerate devices with enumeration_by_parent flag set as
  	 * they will be enumerated by their respective parents.
 -- 
-2.54.0
+2.55.0
 
-From 55bfec713ab52991b252628dc378f363fda5e452 Mon Sep 17 00:00:00 2001
+From 3e8d078ea16792237cc332f8cd44d22aeccae27e Mon Sep 17 00:00:00 2001
 From: zouxiaoh <xiaohong.zou@intel.com>
 Date: Fri, 25 Jun 2021 08:52:59 +0800
 Subject: [PATCH] iommu: intel-ipu: use IOMMU passthrough mode for Intel IPUs
@@ -100,7 +100,7 @@ Patchset: cameras
  1 file changed, 30 insertions(+)
 
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 455d152e817a..51493dc911e7 100644
+index 7914399d4d39..31f1bd75a77a 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
 @@ -44,6 +44,13 @@
@@ -117,7 +117,7 @@ index 455d152e817a..51493dc911e7 100644
  #define IOAPIC_RANGE_START	(0xfee00000)
  #define IOAPIC_RANGE_END	(0xfeefffff)
  #define IOVA_START_ADDR		(0x1000)
-@@ -208,12 +215,14 @@ int intel_iommu_enabled = 0;
+@@ -211,12 +218,14 @@ int intel_iommu_enabled = 0;
  EXPORT_SYMBOL_GPL(intel_iommu_enabled);
  
  static int dmar_map_ipts = 1;
@@ -132,7 +132,7 @@ index 455d152e817a..51493dc911e7 100644
  #define IDENTMAP_IPTS		16
  
  const struct iommu_ops intel_iommu_ops;
-@@ -1406,6 +1415,9 @@ static int device_def_domain_type(struct device *dev)
+@@ -1409,6 +1418,9 @@ static int device_def_domain_type(struct device *dev)
  		if ((iommu_identity_mapping & IDENTMAP_AZALIA) && IS_AZALIA(pdev))
  			return IOMMU_DOMAIN_IDENTITY;
  
@@ -142,7 +142,7 @@ index 455d152e817a..51493dc911e7 100644
  		if ((iommu_identity_mapping & IDENTMAP_IPTS) && IS_IPTS(pdev))
  			return IOMMU_DOMAIN_IDENTITY;
  	}
-@@ -1698,6 +1710,9 @@ static int __init init_dmars(void)
+@@ -1701,6 +1713,9 @@ static int __init init_dmars(void)
  		iommu_set_root_entry(iommu);
  	}
  
@@ -152,7 +152,7 @@ index 455d152e817a..51493dc911e7 100644
  	if (!dmar_map_ipts)
  		iommu_identity_mapping |= IDENTMAP_IPTS;
  
-@@ -3951,6 +3966,18 @@ static void quirk_iommu_igfx(struct pci_dev *dev)
+@@ -3955,6 +3970,18 @@ static void quirk_iommu_igfx(struct pci_dev *dev)
  	disable_igfx_iommu = 1;
  }
  
@@ -171,7 +171,7 @@ index 455d152e817a..51493dc911e7 100644
  static void quirk_iommu_ipts(struct pci_dev *dev)
  {
  	if (!IS_IPTS(dev))
-@@ -4004,6 +4031,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1632, quirk_iommu_igfx);
+@@ -4008,6 +4035,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1632, quirk_iommu_igfx);
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x163A, quirk_iommu_igfx);
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x163D, quirk_iommu_igfx);
  
@@ -182,9 +182,9 @@ index 455d152e817a..51493dc911e7 100644
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9D3E, quirk_iommu_ipts);
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x34E4, quirk_iommu_ipts);
 -- 
-2.54.0
+2.55.0
 
-From 3428f8873644e60bf83e2d5c6a3c3db2a2ce9b9d Mon Sep 17 00:00:00 2001
+From 7d415563796938321b1493854b68cc0be92abbc8 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <djrscally@gmail.com>
 Date: Sun, 10 Oct 2021 20:57:02 +0200
 Subject: [PATCH] platform/x86: int3472: Enable I2c daisy chain
@@ -219,9 +219,9 @@ index a77ed32abe55..3ef46bace187 100644
  
  	return 0;
 -- 
-2.54.0
+2.55.0
 
-From d60ba8da04a048118bc83dbfdb394ef933ff1c3f Mon Sep 17 00:00:00 2001
+From b6e3e770f74f77d6f2f7fd56d830da83967c7188 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <dan.scally@ideasonboard.com>
 Date: Tue, 21 Mar 2023 13:45:26 +0000
 Subject: [PATCH] media: i2c: Clarify that gain is Analogue gain in OV7251
@@ -236,10 +236,10 @@ Patchset: cameras
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/i2c/ov7251.c b/drivers/media/i2c/ov7251.c
-index 27afc3fc0175..28b192c9a5ec 100644
+index 311c61d9e25d..a1a91b41eb4d 100644
 --- a/drivers/media/i2c/ov7251.c
 +++ b/drivers/media/i2c/ov7251.c
-@@ -1053,7 +1053,7 @@ static int ov7251_s_ctrl(struct v4l2_ctrl *ctrl)
+@@ -1052,7 +1052,7 @@ static int ov7251_s_ctrl(struct v4l2_ctrl *ctrl)
  	case V4L2_CID_EXPOSURE:
  		ret = ov7251_set_exposure(ov7251, ctrl->val);
  		break;
@@ -248,7 +248,7 @@ index 27afc3fc0175..28b192c9a5ec 100644
  		ret = ov7251_set_gain(ov7251, ctrl->val);
  		break;
  	case V4L2_CID_TEST_PATTERN:
-@@ -1579,7 +1579,7 @@ static int ov7251_init_ctrls(struct ov7251 *ov7251)
+@@ -1578,7 +1578,7 @@ static int ov7251_init_ctrls(struct ov7251 *ov7251)
  	ov7251->exposure = v4l2_ctrl_new_std(&ov7251->ctrls, &ov7251_ctrl_ops,
  					     V4L2_CID_EXPOSURE, 1, 32, 1, 32);
  	ov7251->gain = v4l2_ctrl_new_std(&ov7251->ctrls, &ov7251_ctrl_ops,
@@ -258,9 +258,9 @@ index 27afc3fc0175..28b192c9a5ec 100644
  				     V4L2_CID_TEST_PATTERN,
  				     ARRAY_SIZE(ov7251_test_pattern_menu) - 1,
 -- 
-2.54.0
+2.55.0
 
-From 97ab56ecf3dbfa78c15ab309d1566d421ff61511 Mon Sep 17 00:00:00 2001
+From ff4339bae5c94382f55c838ba217c01baeda719b Mon Sep 17 00:00:00 2001
 From: Daniel Scally <dan.scally@ideasonboard.com>
 Date: Wed, 22 Mar 2023 11:01:42 +0000
 Subject: [PATCH] media: v4l2-core: Acquire privacy led in
@@ -294,10 +294,10 @@ index 888a2e213b08..f1043fce13e2 100644
  	 * No reference taken. The reference is held by the device (struct
  	 * v4l2_subdev.dev), and async sub-device does not exist independently
 diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
-index 77f3298821b5..10a3eb923fa2 100644
+index 62a3a452f788..349aebb77f2e 100644
 --- a/drivers/media/v4l2-core/v4l2-fwnode.c
 +++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -1270,10 +1270,6 @@ int v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd)
+@@ -1270,10 +1270,6 @@ int __v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *m
  
  	v4l2_async_subdev_nf_init(notifier, sd);
  
@@ -309,9 +309,9 @@ index 77f3298821b5..10a3eb923fa2 100644
  	if (ret < 0)
  		goto out_cleanup;
 -- 
-2.54.0
+2.55.0
 
-From b8dca2baf50967735b24cc2a3780ad20da2c5fea Mon Sep 17 00:00:00 2001
+From 5b5f3a48f88129ea42f2e4df52323527e3f2807b Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:16 +0800
 Subject: [PATCH] platform: x86: int3472: Add MFD cell for tps68470 LED
@@ -352,9 +352,9 @@ index 3ef46bace187..e9b3a8a561a1 100644
  		for (i = 0; i < board_data->n_gpiod_lookups; i++)
  			gpiod_add_lookup_table(board_data->tps68470_gpio_lookup_tables[i]);
 -- 
-2.54.0
+2.55.0
 
-From 031f9507c1883d479dcc01dd9bb1997b88de9e0a Mon Sep 17 00:00:00 2001
+From 1167273389f331093930a5d8c5d1f7945dde2f70 Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:17 +0800
 Subject: [PATCH] include: mfd: tps68470: Add masks for LEDA and LEDB
@@ -393,9 +393,9 @@ index 7807fa329db0..2d2abb25b944 100644
 +
  #endif /* __LINUX_MFD_TPS68470_H */
 -- 
-2.54.0
+2.55.0
 
-From 02ef1e50dba8d3bdaaee77dc08317e87ba9ce309 Mon Sep 17 00:00:00 2001
+From 83e731d824fe40258f1760990117854e837b313e Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:18 +0800
 Subject: [PATCH] leds: tps68470: Add LED control for tps68470
@@ -441,7 +441,7 @@ index f4a0a3c8c870..7d475d554ba3 100644
  	tristate "LED support for SGI Octane machines"
  	depends on LEDS_CLASS
 diff --git a/drivers/leds/Makefile b/drivers/leds/Makefile
-index 8fdb45d5b439..194d5b9eb540 100644
+index 7db3768912ca..98bff1daade8 100644
 --- a/drivers/leds/Makefile
 +++ b/drivers/leds/Makefile
 @@ -94,6 +94,7 @@ obj-$(CONFIG_LEDS_TCA6507)		+= leds-tca6507.o
@@ -644,9 +644,9 @@ index 000000000000..35aeb5db89c8
 +MODULE_DESCRIPTION("LED driver for TPS68470 PMIC");
 +MODULE_LICENSE("GPL v2");
 -- 
-2.54.0
+2.55.0
 
-From 96a9b123112f1b0082bb55bbac9cd2af639bedc6 Mon Sep 17 00:00:00 2001
+From e5c054b09a21829865c5fff3e223cfcfa5e6bbc6 Mon Sep 17 00:00:00 2001
 From: mojyack <mojyack@gmail.com>
 Date: Tue, 26 Mar 2024 05:55:44 +0900
 Subject: [PATCH] media: i2c: dw9719: fix probe error on surface go 2
@@ -662,7 +662,7 @@ Patchset: cameras
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/media/i2c/dw9719.c b/drivers/media/i2c/dw9719.c
-index 59558335989e..b89765521af5 100644
+index 3b7ba88fd67c..440888507802 100644
 --- a/drivers/media/i2c/dw9719.c
 +++ b/drivers/media/i2c/dw9719.c
 @@ -121,6 +121,9 @@ static int dw9719_power_up(struct dw9719_device *dw9719, bool detect)
@@ -676,9 +676,9 @@ index 59558335989e..b89765521af5 100644
  	 * Need 100us to transition from SHUTDOWN to STANDBY.
  	 * Jiggle the SCL pin to wake up the device (even when the regulator is
 -- 
-2.54.0
+2.55.0
 
-From 28824f02952bdb04744c6a63746687650f673d05 Mon Sep 17 00:00:00 2001
+From 24ab81d2e29f06f1e4f4f26fbc03effe76db8ffe Mon Sep 17 00:00:00 2001
 From: Tooraj Taraz <tooraj.taraz@yahoo.com>
 Date: Wed, 31 Dec 2025 00:35:50 +0100
 Subject: [PATCH] Add camera support for Surface Pro 9
@@ -695,7 +695,7 @@ Patchset: cameras
  4 files changed, 184 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/i2c/ov13858.c b/drivers/media/i2c/ov13858.c
-index 162b49046990..85cd0c98af03 100644
+index 09d58e8b1c7f..015493a16430 100644
 --- a/drivers/media/i2c/ov13858.c
 +++ b/drivers/media/i2c/ov13858.c
 @@ -2,6 +2,7 @@
@@ -954,7 +954,7 @@ index 4cc796bbee92..02236f3db19d 100644
  };
  MODULE_DEVICE_TABLE(acpi, ov5693_acpi_match);
 diff --git a/drivers/media/pci/intel/ipu-bridge.c b/drivers/media/pci/intel/ipu-bridge.c
-index fc6608e33de4..7ce4692d33b8 100644
+index 88581a4c081d..3d9be9e5c065 100644
 --- a/drivers/media/pci/intel/ipu-bridge.c
 +++ b/drivers/media/pci/intel/ipu-bridge.c
 @@ -61,6 +61,10 @@ static const struct ipu_sensor_config ipu_supported_sensors[] = {
@@ -1017,9 +1017,9 @@ index 115bb37577a1..b2a54733df20 100644
  			ret = -EINVAL;
  			break;
 -- 
-2.54.0
+2.55.0
 
-From 5ad8cdb53b18a72071bdff9821b774e1a3adedcf Mon Sep 17 00:00:00 2001
+From 36a2bafad8b52ef88e0deaf569ebd26b5ae954d3 Mon Sep 17 00:00:00 2001
 From: gabrielstedman <gabrielstedman@users.noreply.github.com>
 Date: Fri, 13 Mar 2026 08:52:07 +0000
 Subject: [PATCH] media: ipu-bridge: Add front camera rotation quirks for
@@ -1036,7 +1036,7 @@ Patchset: cameras
  1 file changed, 14 insertions(+)
 
 diff --git a/drivers/media/pci/intel/ipu-bridge.c b/drivers/media/pci/intel/ipu-bridge.c
-index 7ce4692d33b8..209767f44bd2 100644
+index 3d9be9e5c065..a69a34ece51d 100644
 --- a/drivers/media/pci/intel/ipu-bridge.c
 +++ b/drivers/media/pci/intel/ipu-bridge.c
 @@ -138,6 +138,20 @@ static const struct dmi_system_id upside_down_sensor_dmi_ids[] = {
@@ -1061,5 +1061,5 @@ index 7ce4692d33b8..209767f44bd2 100644
  };
  
 -- 
-2.54.0
+2.55.0
 

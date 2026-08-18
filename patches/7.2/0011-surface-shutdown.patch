@@ -1,4 +1,4 @@
-From 45afc15fa8a82e955bedb22b89783aeb38f39a3e Mon Sep 17 00:00:00 2001
+From 11de49623a146bd5891316dba4ddc84a0c4053da Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sun, 19 Feb 2023 22:12:24 +0100
 Subject: [PATCH] PCI: Add quirk to prevent calling shutdown method
@@ -23,10 +23,10 @@ Patchset: surface-shutdown
  3 files changed, 40 insertions(+)
 
 diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index e3f59001785a..acd35ed4b94a 100644
+index f36778e62ac1..de9c470e89f7 100644
 --- a/drivers/pci/pci-driver.c
 +++ b/drivers/pci/pci-driver.c
-@@ -543,6 +543,9 @@ static void pci_device_shutdown(struct device *dev)
+@@ -536,6 +536,9 @@ static void pci_device_shutdown(struct device *dev)
  	struct pci_dev *pci_dev = to_pci_dev(dev);
  	struct pci_driver *drv = pci_dev->driver;
  
@@ -37,10 +37,10 @@ index e3f59001785a..acd35ed4b94a 100644
  
  	if (drv && drv->shutdown)
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index caaed1a01dc0..bea24e8523bf 100644
+index b09f27f7846f..54e7d744f3f8 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -6381,3 +6381,39 @@ static void pci_mask_replay_timer_timeout(struct pci_dev *pdev)
+@@ -6415,3 +6415,39 @@ static void pci_mask_replay_timer_timeout(struct pci_dev *pdev)
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_GLI, 0x9750, pci_mask_replay_timer_timeout);
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_GLI, 0x9755, pci_mask_replay_timer_timeout);
  #endif
@@ -81,21 +81,21 @@ index caaed1a01dc0..bea24e8523bf 100644
 +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x466d, quirk_no_shutdown);  // Thunderbolt 4 NHI
 +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x46a8, quirk_no_shutdown);  // GPU
 diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 2c4454583c11..3d32cf46efba 100644
+index 64b308b6e61c..8c59e438958d 100644
 --- a/include/linux/pci.h
 +++ b/include/linux/pci.h
-@@ -509,6 +509,7 @@ struct pci_dev {
+@@ -510,6 +510,7 @@ struct pci_dev {
  	unsigned int	rom_bar_overlap:1;	/* ROM BAR disable broken */
  	unsigned int	rom_attr_enabled:1;	/* Display of ROM attribute enabled? */
- 	unsigned int	non_mappable_bars:1;	/* BARs can't be mapped to user-space  */
+ 	unsigned int	non_mappable_bars:1;	/* BARs can't be mapped by CPU or peers */
 +	unsigned int	no_shutdown:1;		/* Do not touch device on shutdown */
  	pci_dev_flags_t dev_flags;
  	atomic_t	enable_cnt;	/* pci_enable_device has been called */
  
 -- 
-2.54.0
+2.55.0
 
-From 29be021c55b49b077472103fb77f2469f63c99f6 Mon Sep 17 00:00:00 2001
+From 18cb3e0cc4a15762da983f0b879fb6da91e12a31 Mon Sep 17 00:00:00 2001
 From: LegendaryFire <tristan.balon@outlook.com>
 Date: Wed, 7 Jan 2026 01:06:25 +0100
 Subject: [PATCH] PCI: Add Surface Laptop Studio 2 devices to shutdown ops
@@ -108,10 +108,10 @@ Patchset: surface-shutdown
  1 file changed, 13 insertions(+)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index bea24e8523bf..9d6dd43318a5 100644
+index 54e7d744f3f8..2048d7f2eee7 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -6400,6 +6400,13 @@ static const struct dmi_system_id no_shutdown_dmi_table[] = {
+@@ -6434,6 +6434,13 @@ static const struct dmi_system_id no_shutdown_dmi_table[] = {
  			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Laptop 5"),
  		},
  	},
@@ -125,7 +125,7 @@ index bea24e8523bf..9d6dd43318a5 100644
  	{}
  };
  
-@@ -6417,3 +6424,9 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x461f, quirk_no_shutdown);  // Thu
+@@ -6451,3 +6458,9 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x461f, quirk_no_shutdown);  // Thu
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x462f, quirk_no_shutdown);  // Thunderbolt 4 PCI Express Root Port
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x466d, quirk_no_shutdown);  // Thunderbolt 4 NHI
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x46a8, quirk_no_shutdown);  // GPU
@@ -136,5 +136,5 @@ index bea24e8523bf..9d6dd43318a5 100644
 +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0xa73e, quirk_no_shutdown);  // Thunderbolt 4 NHI
 +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0xa7a0, quirk_no_shutdown);  // GPU
 -- 
-2.54.0
+2.55.0
 

@@ -1,4 +1,4 @@
-From 9332a22cc6a9f4161bc801285f693356ab75f20d Mon Sep 17 00:00:00 2001
+From 4811aaa6dc9cf3345eb6f9f03085f93acdf5b16b Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sat, 27 Feb 2021 00:45:52 +0100
 Subject: [PATCH] ath10k: Add module parameters to override board files
@@ -116,5 +116,5 @@ index 7c2939cbde5f..eb402a3a8c5f 100644
  		snprintf(filename, sizeof(filename), "%s/%s/%s",
  			 dir, ar->board_name, file);
 -- 
-2.54.0
+2.55.0
 
