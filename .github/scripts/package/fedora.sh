@@ -28,13 +28,14 @@ setup-builddeps)
     dnf install sbsigntools
     ;;
 setup-secureboot)
-    if [ -z "${SB_KEY:-}" ]; then
+    if [ -z "${SB_KEY:+present}" ]; then
         echo "WARNING: No secureboot key configured, skipping signing."
         exit
     fi
 
     # Install the surface secureboot certificate
-    echo "${SB_KEY}" | base64 -d > pkg/fedora/kernel-surface/secureboot/MOK.key
+    python3 -c 'import base64, os, sys; sys.stdout.buffer.write(base64.b64decode(os.environ["SB_KEY"]))' \
+        > pkg/fedora/kernel-surface/secureboot/MOK.key
     cp pkg/keys/surface.crt pkg/fedora/kernel-surface/secureboot/MOK.crt
     ;;
 build-packages)
