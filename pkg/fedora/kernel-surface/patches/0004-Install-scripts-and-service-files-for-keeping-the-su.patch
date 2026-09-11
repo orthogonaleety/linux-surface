@@ -75,8 +75,8 @@ index c5748edf9301..f26b37b3354d 100644
  %if %{with_tools}
  %post -n %{name}-tools-libs
  /sbin/ldconfig
-@@ -4657,6 +4684,12 @@ fi\
- %{_libexecdir}/kselftests
+@@ -4811,6 +4838,12 @@ fi\
+ %{_datadir}/%{name}-kmap-internal/kernel-map-%{KVERREL}.json
  %endif
  
 +%files default-watchdog
@@ -87,7 +87,7 @@ index c5748edf9301..f26b37b3354d 100644
 +
  # empty meta-package
  %if %{with_stock_base}
- %ifnarch %nobuildarches noarch
+ %ifnarch noarch %{nobuildarches}
 -- 
 2.53.0
 
