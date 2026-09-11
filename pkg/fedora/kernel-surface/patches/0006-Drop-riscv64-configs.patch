@@ -53,7 +53,7 @@ diff --git a/redhat/kernel.spec.template b/redhat/kernel.spec.template
 index 14a3f28bf01f..b3a243782b75 100644
 --- a/redhat/kernel.spec.template
 +++ b/redhat/kernel.spec.template
-@@ -1074,9 +1074,6 @@ Source33: %{name}-x86_64-debug-rhel.config
+@@ -1060,9 +1060,6 @@ Source33: %{name}-x86_64-debug-rhel.config
  # ARM64 64K page-size kernel config
  Source42: %{name}-aarch64-64k-rhel.config
  Source43: %{name}-aarch64-64k-debug-rhel.config
@@ -62,7 +62,7 @@ index 14a3f28bf01f..b3a243782b75 100644
 -Source45: %{name}-riscv64-debug-rhel.config
  %endif
  
- %if %{include_rhel} || %{include_automotive}
+ %if 0%{?include_rhel} || 0%{?include_automotive}
 @@ -1098,8 +1095,6 @@ Source58: %{name}-s390x-fedora.config
  Source59: %{name}-s390x-debug-fedora.config
  Source60: %{name}-x86_64-fedora.config
