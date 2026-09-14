@@ -1039,9 +1039,9 @@ diff --git a/drivers/media/pci/intel/ipu-bridge.c b/drivers/media/pci/intel/ipu-
 index 3d9be9e5c065..a69a34ece51d 100644
 --- a/drivers/media/pci/intel/ipu-bridge.c
 +++ b/drivers/media/pci/intel/ipu-bridge.c
-@@ -138,6 +138,20 @@ static const struct dmi_system_id upside_down_sensor_dmi_ids[] = {
+@@ -179,6 +179,20 @@ static const struct dmi_system_id upside_down_sensor_dmi_ids[] = {
  		},
- 		.driver_data = "OVTI02C1",
+ 		.driver_data = "SONY471A",
  	},
 +	{
 +		.matches = {
