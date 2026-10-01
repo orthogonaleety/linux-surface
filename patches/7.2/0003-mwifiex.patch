@@ -366,15 +366,15 @@ index 184e95c1625e..2e1b92383996 100644
 +#define BTUSB_LOWER_LESCAN_INTERVAL	BIT(30)
  
  static const struct usb_device_id btusb_table[] = {
- 	/* Generic Bluetooth USB device */
+ 	/*
 @@ -472,6 +473,7 @@ static const struct usb_device_id quirks_table[] = {
  	{ USB_DEVICE(0x1286, 0x2044), .driver_info = BTUSB_MARVELL },
  	{ USB_DEVICE(0x1286, 0x2046), .driver_info = BTUSB_MARVELL },
  	{ USB_DEVICE(0x1286, 0x204e), .driver_info = BTUSB_MARVELL },
 +	{ USB_DEVICE(0x1286, 0x204c), .driver_info = BTUSB_LOWER_LESCAN_INTERVAL },
  
- 	/* Intel Bluetooth devices */
- 	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_COMBINED },
+ 	/*
+ 	 * NXP IW610 BT interfaces (Marvell-lineage silicon, same quirk as
 @@ -4258,6 +4260,19 @@ static int btusb_probe(struct usb_interface *intf,
  	if (id->driver_info & BTUSB_MARVELL)
  		hdev->set_bdaddr = btusb_set_bdaddr_marvell;
