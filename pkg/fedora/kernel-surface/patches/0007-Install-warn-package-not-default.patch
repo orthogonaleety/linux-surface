@@ -1,0 +1,83 @@
+From fdbe4b619926a53b0e0c5d031fc9bc0ec4931291 Mon Sep 17 00:00:00 2001
+From: orthogonaleety <108008609+orthogonaleety@users.noreply.github.com>
+Date: Sat, 17 Oct 2026 12:13:26 +0100
+Subject: [PATCH] Install warning when sysconfig conflicts with linux-surface
+ as default
+
+There exists machinery in standard (grub) Fedora builds, which
+upon install of every kernel update selects such as the default.
+This is configurable to some specifically named kernel package.
+Typically this results in such as the standard Fedora kernel
+fighting and wresting selection back from linux-surface,
+and winning even against the linux-surface watchdog.
+What is more, this machinery can be leveraged by the user as a
+proper means of selecting our kernel as the default after install.
+
+This change helps in this area by checking this standard
+configuration at kernel install time, and just warning the user,
+in the dnf terminal output and also in the journal, if the current
+config might fight our kernel and could be amended to help.
+
+It is interested first only in whether some kernel other than
+our package is being targeted.
+Provided our kernel package has been configured for targeting,
+if it then finds that acting upon new kernels is not enabled,
+it warns about such.
+The script does not effect changes to these key admin files/choices.
+
+This patches kernel.spec.template, from which rpmbuild assembles
+the packages' %post scripts.
+Text *following* the stock kernel's %kernel_variant_post call
+is assembled into the end of kernel-core's %post.
+
+The linux-surface build scripts effect with_stock and by
+spec's default with_base.
+So %{with_stock_base} is the block we place our check and warning in.
+
+(Tested and evaluated by the author,) but 'heavily' and for
+flow location especially, co-authored-by: ...
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ redhat/kernel.spec.template | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/redhat/kernel.spec.template b/redhat/kernel.spec.template
+index 29dce19ad93..a7d4b3db562 100644
+--- a/redhat/kernel.spec.template
++++ b/redhat/kernel.spec.template
+@@ -4520,6 +4520,31 @@ fi\
+ %if %{with_stock_base}
+ %kernel_variant_preun -e
+ %kernel_variant_post
++# Warn (stderr and journal) if DEFAULTKERNEL names some other kernel package,
++# or if it names this one but UPDATEDEFAULT is not "yes".
++# Check only: the file is never modified, and any problem reading it is silent.
++if [ -r /etc/sysconfig/kernel ]; then
++  (
++    . /etc/sysconfig/kernel 2>/dev/null || exit 0
++    warn() {
++      printf '%s\n%s\n' "$1" "$2" >&2
++      logger -t %{name} -p user.warning -- "$1 ${2#\* }" 2>/dev/null || :
++    }
++    pkg=%{name}
++#   Matches not PACKAGENAME, kernel-PACKAGENAME , kernel-PACKAGENAME-core
++    if [ -n "$DEFAULTKERNEL" ] && [ "$DEFAULTKERNEL" != "$pkg" ] && [ "$DEFAULTKERNEL" != "$pkg-core" ] &&
++       [ "$DEFAULTKERNEL" != "${pkg#kernel-}" ]; then
++      warn "warning: default kernel may not be set to %{name} following this install." \
++           "* Consult documentation for your system on selecting the default kernel."
++      warn "warning: %{name} may lose default status to other kernel packages, such as the standard Fedora kernel." \
++           "* Consider amending /etc/sysconfig/kernel to: DEFAULTKERNEL=%{name}"
++#   Targeting our package, so warn if not updating as default
++    elif [ -n "$DEFAULTKERNEL" ] && [ "$UPDATEDEFAULT" != "yes" ]; then
++      warn "warning: default kernel may not be set to %{name} following this install." \
++           "* Consider amending /etc/sysconfig/kernel to: UPDATEDEFAULT=yes"
++    fi
++  ) || :
++fi
+ %endif
+ 
+ %if %{with_zfcpdump}
+-- 
+2.56.0
+
