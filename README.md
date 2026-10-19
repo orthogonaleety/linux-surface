@@ -1,3 +1,5 @@
+This is a largely a personal fork of upstream linux-surface for building Fedora 44 7.x kernels. All current work lives on branches, master is aimed at upstream. Anyone is welcome to use my builds, but as there is no collaborative oversight to keep you safe then as a matter of minimum transparency the builds are only available for download as the original artifacts under the workflow runs. In this way the link to the code that created them remains more evident, for public inspection. To further ensure the build environment is neutral you can note that the workers are github hosted and not remote. For more details on obtaining a build go to a relevant [tagged release](https://github.com/orthogonaleety/linux-surface/releases) and read the release instructions and use the links under there.
+
 # Linux Surface
 
 Linux running on the Microsoft Surface devices.
@@ -15,6 +17,7 @@ In short, for the parts that are not supported upstream yet.
 Unfortunately, Surface devices tend to be a bit special.
 This is mostly because some hardware choices Microsoft made are rarely (if at all) used by other, more "standard", devices.
 For example:
+
 - Surface devices (4th generation and later) use their own embedded controller (the Surface Aggregator Module, or SAM).
   In contrast to other devices, however, some newer Surface devices route their keyboard and touchpad input via this controller.
   Unfortunately, every new Surface device requires some (usually small) patch to enable support for it, since devices managed by SAM are generally not auto-discoverable.
@@ -98,25 +101,33 @@ If you want to compile the kernel yourself (e.g. if your distribution is not sup
 
 If you have questions or need support, please join our [Matrix Space][matrix-space]!
 This space contains
+
 - a [support channel][matrix-support] for general support and
 - a [development channel][matrix-development] for all development related questions and discussions.
 
 ## License
+
 This repository contains patches, which are either derivative work targeting a specific already licensed source, i.e. parts of the Linux kernel, or introduce new parts to the Linux kernel.
 These patches fall thus, if not explicitly stated otherwise, under the license of the source they are targeting, or if they introduce new code, the license they explicitly specify inside of the patch.
 Please refer to the specific patch and source in question for further information.
 License texts can be obtained at https://github.com/torvalds/linux/tree/master/LICENSES.
 
 [wiki]: https://github.com/linux-surface/linux-surface/wiki
+
 [wiki-setup]: https://github.com/linux-surface/linux-surface/wiki/Installation-and-Setup
+
 [wiki-compiling]: https://github.com/linux-surface/linux-surface/wiki/Compiling-the-Kernel-from-Source
+
 [wiki-encryption]: https://github.com/linux-surface/linux-surface/wiki/Disk-Encryption
 
 [matrix-space]: https://matrix.to/#/#linux-surface:matrix.org
+
 [matrix-support]: https://matrix.to/#/#linux-surface-support:matrix.org
+
 [matrix-development]: https://matrix.to/#/#linux-surface-development:matrix.org
 
 [hibernate-setup]: https://fitzcarraldoblog.wordpress.com/2018/07/14/configuring-lubuntu-18-04-to-enable-hibernation-using-a-swap-file
+
 [releases]: https://github.com/linux-surface/linux-surface/releases
 
 [linux-surface-kernel]: https://github.com/linux-surface/kernel/
